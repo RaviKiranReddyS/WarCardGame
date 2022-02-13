@@ -8,6 +8,12 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State private var playerCard = "card3"
+    @State private var cpuCard = "card6"
+    @State private var playerScore = 0
+    @State private var cpuScore = 0
+    
     var body: some View {
         ZStack{
             Image("background").ignoresSafeArea()
@@ -18,13 +24,32 @@ struct ContentView: View {
                 Spacer()
                 HStack{
                     Spacer()
-                    Image("card3")
+                    Image(playerCard)
                     Spacer()
-                    Image("card4")
+                    Image(cpuCard)
                     Spacer()
                 }
                 Spacer()
-                Image("dealbutton")
+                Button(action: {
+                    //print("You clicked the Deal Button")
+                    
+                    let playerRandNum = Int.random(in: 2...14)
+                    let cpuRandNum = Int.random(in: 2...14)
+                    playerCard = "card" + String(playerRandNum)
+                    cpuCard = "card" + String(cpuRandNum)
+                    
+                    if(playerRandNum > cpuRandNum)
+                    {
+                        playerScore += 1
+                    }
+                    else if (cpuRandNum > playerRandNum)
+                    {
+                        cpuScore += 1
+                    }
+                }) {
+                    Image("dealbutton")
+                }
+                //Image("dealbutton")
                 Spacer()
                 HStack{
                     Spacer()
@@ -33,7 +58,7 @@ struct ContentView: View {
                             .font(.headline)
                             .foregroundColor(Color.white)
                             .padding([.bottom, .trailing], 10.0)
-                        Text("0")
+                        Text(String(playerScore))
                             .font(.largeTitle)
                             .foregroundColor(Color.white)
                     }
@@ -43,7 +68,7 @@ struct ContentView: View {
                             .font(.headline)
                             .foregroundColor(Color.white)
                             .padding([.bottom, .trailing], 10.0)
-                        Text("0")
+                        Text(String(cpuScore))
                             .font(.largeTitle)
                             .foregroundColor(Color.white)
                     }
